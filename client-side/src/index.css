@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.primary_color{
+    @apply text-gray-500;
+}
+
+.primary_background{
+    @apply bg-gray-600
+}
+
+.img_bg{
+-webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}

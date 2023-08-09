@@ -1,5 +1,6 @@
 import RecommendedFlights from "../../../Components/RecommendedFlight/RecommendedFlights";
 import OurServices from "../OurServices/OurServices";
+import Testomonial from "../Testomonial/Testomonial";
 
 const Home = () => {
   return (
@@ -8,6 +9,7 @@ const Home = () => {
 
       <RecommendedFlights />
       <OurServices />
+      <Testomonial />
     </div>
   );
 };
