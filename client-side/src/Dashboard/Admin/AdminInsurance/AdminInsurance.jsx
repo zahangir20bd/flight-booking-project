@@ -47,7 +47,7 @@ const AdminInsurance = () => {
       deniedFeedback: deniedFeedback,
     };
     fetch(
-      `http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -66,7 +66,7 @@ const AdminInsurance = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     setIsModalDeniedOpen(false);
@@ -82,7 +82,7 @@ const AdminInsurance = () => {
       claimedAmount: payableAmount,
     };
     fetch(
-      `http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -101,7 +101,7 @@ const AdminInsurance = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     return;
   };

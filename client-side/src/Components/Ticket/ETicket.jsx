@@ -31,27 +31,27 @@ const ETicket = ({ booking }) => {
         };
         emailjs
           .send(
-            "service_g3u6g2j",
-            "template_lie9arz",
+            "service_y6ldylc",
+            "template_3zv6g6c",
             templateParams,
-            "08zZeCBY_SKio7TxV"
+            "w9Pnw6KhtfQAcLD4k"
           )
           .then(
             (response) => {
-              console.log(
-                "Invoice Send SUCCESS!",
-                response.status,
-                response.text
-              );
+              // console.log(
+              //   "Invoice Send SUCCESS!",
+              //   response.status,
+              //   response.text
+              // );
             },
             (err) => {
-              console.log("FAILED...", err);
+              // console.log("FAILED...", err);
             }
           );
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log(err.message);
+        // console.log(err.message);
       });
   }, []);
 
@@ -72,7 +72,7 @@ const ETicket = ({ booking }) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data); // You can handle the response from ImgBB here
+          // console.log(data);
         })
         .catch((error) => {
           console.error("Error uploading image:", error);

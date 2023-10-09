@@ -10,7 +10,7 @@ export const saveUser = async (user) => {
   };
 
   try {
-    const response = await fetch("http://localhost:5000/users", {
+    const response = await fetch("https://server-side-tawny-sigma.vercel.app/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export const saveUser = async (user) => {
     });
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     if (data.acknowledged === true) {
       toast.success("User saved successfully!");

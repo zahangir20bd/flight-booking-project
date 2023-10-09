@@ -37,7 +37,7 @@ const AdminNav = ({closeSidebar}) => {
   }, [axiosSecure]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/allBookings`)
+    fetch(`https://server-side-tawny-sigma.vercel.app/allBookings`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setAllBookings(data));
@@ -47,7 +47,7 @@ const AdminNav = ({closeSidebar}) => {
   useEffect(() => {
     if (airportCode) {
       dispatch(setLoading(true));
-      fetch(`http://localhost:5000/manageAllFlights/${airportCode}/${id}`)
+      fetch(`https://server-side-tawny-sigma.vercel.app/manageAllFlights/${airportCode}/${id}`)
         .then((response) => response.json())
         .then((data) => {
           dispatch(setFlights(data));

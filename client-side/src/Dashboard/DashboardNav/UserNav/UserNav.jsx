@@ -14,10 +14,10 @@ const UserNav = ({closeSidebar}) => {
   const refetch = useSelector((state) => state.userInfo?.refetch);
   const dispatch = useDispatch();
 
-  console.log("refetch from userNav", refetch);
+  // console.log("refetch from userNav", refetch);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/userBooking/${user?.email}`)
+    fetch(`https://server-side-tawny-sigma.vercel.app/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));

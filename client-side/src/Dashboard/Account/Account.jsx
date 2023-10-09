@@ -48,7 +48,7 @@ const Account = () => {
       bio: event.target.bio.value,
     };
 
-    fetch(`http://localhost:5000/users/${currentUser._id}`, {
+    fetch(`https://server-side-tawny-sigma.vercel.app/users/${currentUser._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -62,10 +62,10 @@ const Account = () => {
         } else {
           toast.error("Failed to update user data");
         }
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

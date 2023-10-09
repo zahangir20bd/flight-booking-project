@@ -124,7 +124,7 @@ const AdminHome = () => {
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Revenue</p>
+                <p className="text-lg font-semibold">Today Revenue</p>
                 <h2 className="text-2xl font-bold">{totalSum} BDT</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
@@ -170,7 +170,7 @@ const AdminHome = () => {
           <div className="flex justify-between items-center my-5">
             <div>
               <h2 className="text-xl md:text-2xl font-bold">
-                Pev vs Today Revenue
+                Revenue
               </h2>
               <p className="font-semibold text-gray-500 tracking-wider">
                 Revenue Without Vat
@@ -197,8 +197,8 @@ const AdminHome = () => {
               <Tooltip />
               <ReferenceLine x="January" stroke="green" />
               <ReferenceLine
-                y={4000}
-                label="Max"
+                y={20000}
+                label="min"
                 stroke="red"
                 strokeDasharray="3 3"
               />

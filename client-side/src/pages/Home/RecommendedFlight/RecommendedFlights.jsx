@@ -14,7 +14,7 @@ const RecommendedFlights = () => {
       });
   }, []);
 
-  console.log(recommendedFlights);
+  // console.log(recommendedFlights);
 
   return (
     <div id="recommended-flights">

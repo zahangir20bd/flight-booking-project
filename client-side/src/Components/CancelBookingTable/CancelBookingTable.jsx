@@ -34,7 +34,7 @@ const CancelBookingTable = ({
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  console.log("status", status);
+  // console.log("status", status);
 
   return (
     <div>

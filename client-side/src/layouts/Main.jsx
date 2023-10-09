@@ -15,13 +15,13 @@ const Main = () => {
   const refetch = useSelector((state) => state.ourServices?.refetch);
 
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch("https://server-side-tawny-sigma.vercel.app/services")
       .then((res) => res.json())
       .then((data) => dispatch(setServices(data)));
   }, [refetch]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/whyairbliss")
+    fetch("https://server-side-tawny-sigma.vercel.app/whyairbliss")
       .then((res) => res.json())
       .then((data) => {
         console.log("Data", data);

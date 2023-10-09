@@ -5,13 +5,13 @@ import { useSelector } from "react-redux";
 
 const OurServices = () => {
   const [viewAll, setViewAll] = useState(false);
-  const allServices = useSelector((state) => state.ourServices?.services);
+  const allServices = useSelector((state) => state?.ourServices?.services);
 
   const handleViewAll = () => {
     setViewAll(true);
   };
 
-  const services = viewAll ? allServices : allServices.slice(0, 4);
+  const services = viewAll ? allServices : allServices?.slice(0, 4);
 
   return (
     <section id="our-services">

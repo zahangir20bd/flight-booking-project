@@ -83,15 +83,14 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
                 onClick={() =>
                   handelCardComapnyFilter(singleAirline?.airlineName)
                 }
-                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
-                  selectedCard === singleAirline?.airlineName
+                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${selectedCard === singleAirline?.airlineName
                     ? "bg-cyan-50 dark:bg-gray-600"
-                    : "" 
-                }`}
+                    : ""
+                  }`}
               >
                 <img
                   className="w-auto rounded-md object-cover h-[40px]"
-                  src={singleAirline?.airlineLogo}
+                  src={singleAirline?.airlineLogo ? singleAirline?.airlineLogo : "https://i.ibb.co/dpG82ZV/images.jpg"}
                   alt=""
                 />
                 <h1 className="text-center md:font-semibold text-[10px] md:text-[14px] mt-4">

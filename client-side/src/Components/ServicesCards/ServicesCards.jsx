@@ -29,7 +29,7 @@ const ServicesCards = ({ services }) => {
             <p className="mb-2 dark:text-gray-400 pr-2">{service?.caption}</p>
             <Link to={`/service/${service?._id}`}>
               <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 px-5 rounded-full h-[38px] text-white font-semibold">
-                See All
+                Details
               </button>
             </Link>
           </div>

@@ -42,7 +42,7 @@ const ManageBooking = () => {
     (flight) => flight?.bookingReference === flightRef
   );
 
-  console.log(myFlight);
+  // console.log(myFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -74,7 +74,7 @@ const ManageBooking = () => {
     };
     // console.log(cancelFlightInfo);
     fetch(
-      `http://localhost:5000/bookings/cancel/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/bookings/cancel/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -84,7 +84,7 @@ const ManageBooking = () => {
       }
     )
       .then((response) => {
-        console.log("cancel Response", response);
+        // console.log("cancel Response", response);
         // if (!response.ok) {
         //   throw new Error("Network response was not ok");
         // }
@@ -93,7 +93,7 @@ const ManageBooking = () => {
       .then((data) => {
         dispatch(setRefetch(new Date().toString()));
         successToast("Cancel request submit successful");
-        console.log("Success:", data?.message);
+        // console.log("Success:", data?.message);
       })
       .catch((error) => {
         console.error("Error:", error);

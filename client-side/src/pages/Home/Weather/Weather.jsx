@@ -57,11 +57,11 @@ const Weather = () => {
 
   return (
     <div className="mb-5 top-2">
-      <div className="main-container  ">
+      <div className="main-container">
         <video autoPlay muted loop className="background-video">
           <source src={sky} type="video/mp4" />
         </video>
-        <div className="absolute w-full   dark:h-[450px] dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
+        <div className="absolute w-full dark:h-[450px] dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
           <h1 className="text-white text-center md:text-2xl font-bold">
             Weather Update For Safe Journey
           </h1>
