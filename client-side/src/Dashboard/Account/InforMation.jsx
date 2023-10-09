@@ -48,13 +48,13 @@ const InforMation = ({ currentUser }) => {
       .then((res) => res.json())
       .then((imageData) => {
         const imageUrl = imageData.data.display_url;
-        console.log(imageUrl);
+        // console.log(imageUrl);
 
         const usersData = {
           backgroundImg: imageUrl,
         };
 
-        fetch(`http://localhost:5000/users/${currentUser._id}`, {
+        fetch(`https://server-side-tawny-sigma.vercel.app/users/${currentUser._id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -72,11 +72,11 @@ const InforMation = ({ currentUser }) => {
             // location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err.message);
+        // console.log(err.message);
         toast.error(err.message);
       });
     return;

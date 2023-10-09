@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
 import { formatDate } from "../../../../utils/formatDate";
+import { setSelectedCard } from "../../../../redux/features/bookingInfoSlice";
 
 import {
   setIsLoading,
@@ -133,8 +134,9 @@ const BookFlight = () => {
   };
 
   const handelCardComapnyFilter = (airlineName) => {
-    console.log(airlineName);
-    const filteredData = flight.filter(
+    dispatch(setSelectedCard(airlineName));
+
+    const filteredData = flight?.filter(
       (item) => item.airlineName === airlineName
     );
 
@@ -154,7 +156,7 @@ const BookFlight = () => {
 
       navigate(from, { replace: true });
     }
-    
+
   }
 
   return (
@@ -173,8 +175,8 @@ const BookFlight = () => {
             <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
               <button
                 className={`p-4 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === "cheapest"
-                    ? "bg-cyan-50 text-white dark:bg-white/20"
-                    : "text-white"
+                  ? "bg-cyan-50 text-white dark:bg-white/20"
+                  : "text-white"
                   }`}
                 onClick={() => handleButtonClick("cheapest")}
               >
@@ -188,8 +190,8 @@ const BookFlight = () => {
               <div className="border self-stretch mx-5"></div>
               <button
                 className={`p-4 text-left  flex-grow py-2 px-3 pe-5 mb-0 border-0 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ${selectedButton === "shortest"
-                    ? "bg-cyan-50 text-white dark:bg-white/20   "
-                    : "text-white"
+                  ? "bg-cyan-50 text-white dark:bg-white/20   "
+                  : "text-white"
                   }`}
                 onClick={() => handleButtonClick("shortest")}
               >
@@ -214,9 +216,9 @@ const BookFlight = () => {
                 <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
                     <img
-                      className="h-16 w-16 rounded-full -ml-2"
-                      src={singleFlight?.airlineLogo}
-                      alt=""
+                      className="h-16 w-16 object-cover rounded-full -ml-2"
+                      src={singleFlight?.airlineLogo ? singleFlight?.airlineLogo : "https://i.ibb.co/30FqcLm/airplane-sky-1308-31202-removebg-preview.png"}
+                      alt={singleFlight?.airlineName}
                     />
                     <div>
                       <p className="text-gray-400 text-xs md:text-sm mt-2 md:mt-1">
@@ -353,7 +355,7 @@ const BookFlight = () => {
             ))}
 
             {/* Paination Button Section */}
-            <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
+            <section className="mt-12 cursor-pointer mr-6 mb-8 flex justify-end items-center">
               <button
                 className="border-[1px] p-2 rounded-l-md dark:bg-gray-500"
                 onClick={handlePaginationPrev}

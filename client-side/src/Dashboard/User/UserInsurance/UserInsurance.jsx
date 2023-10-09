@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 import logo from "../../../assets/icon/airblissBlack.png";
@@ -11,6 +11,7 @@ const UserInsurance = () => {
   const [isActive, setIsActive] = useState("allInsurance");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
+  const [isRefetch, setIsRefetch] = useState("");
 
   const newDate = new Date();
   const todayDate = format(newDate, "yyyy-MM-dd");
@@ -37,6 +38,11 @@ const UserInsurance = () => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    dispatch(setRefetch(new Date().toString()));
+    closeModal();
+  }, [isRefetch])
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const premiumType = event.target.premiumType.value;
@@ -44,7 +50,7 @@ const UserInsurance = () => {
     const summary = event.target.summary.value;
     const image = event.target.image.files[0];
 
-    console.log(premiumType, requireAmount, summary, image);
+    // console.log(premiumType, requireAmount, summary, image);
 
     const formData = new FormData();
     formData.append("image", image);
@@ -56,9 +62,9 @@ const UserInsurance = () => {
       body: formData,
     })
       .then((res) => res.json())
-      .then(async (imageData) => {
+      .then((imageData) => {
         const imageUrl = imageData.data.display_url;
-        console.log(imageUrl);
+        // console.log(imageUrl);
 
         const insuranceData = {
           media: imageUrl,
@@ -66,29 +72,34 @@ const UserInsurance = () => {
           requireAmount: requireAmount,
           premiumType: premiumType,
         };
-        try {
-          const response = await fetch(
-            `http://localhost:5000/insuranceClaim/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ insuranceData }),
-            }
-          );
-          const data = await response.json();
-          dispatch(setRefetch(new Date().toString()));
-          console.log(data);
-          closeModal();
-        } catch (error) {
-          console.error("Error saving user:", error);
-        }
+
+        handleDataUpload(insuranceData)
+
       })
       .catch((err) => {
         console.log(err.message);
         toast.error(err.message);
       });
+  }
+
+  const handleDataUpload = (insuranceData) => {
+    fetch(`https://server-side-tawny-sigma.vercel.app/insuranceClaim/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ insuranceData }),
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log("data", data)
+        setIsRefetch(new Date().toString())
+      })
+      .catch(err => {
+        console.log(err.message);
+      })
   }
 
 
@@ -98,7 +109,7 @@ const UserInsurance = () => {
 
   return (
     <div>
-      <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4">
+      <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col overflow-x-scroll md:items-center md:mx-7 md:space-x-4">
         <div className="mb-2 md:mb-0">
           <h1 className="font-semibold ">All Insurance: </h1>
         </div>
@@ -423,7 +434,6 @@ const UserInsurance = () => {
                           Close
                         </button>
                         <button
-                          onClick={() => closeModal()}
                           type="submit" // Use type="submit" here
                           className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         >

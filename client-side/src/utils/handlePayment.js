@@ -108,17 +108,17 @@ export const paymentLater = (flightInfo, userInfo) => {
     // Come back soon...........................
     emailjs
       .send(
-        "service_g3u6g2j",
-        "template_6gdp0x6",
+        "service_y6ldylc",
+        "template_rkov8w3",
         templateParams,
-        "08zZeCBY_SKio7TxV"
+        "w9Pnw6KhtfQAcLD4k"
       )
       .then(
         (response) => {
-          console.log("SUCCESS!", response.status, response.text);
+          // console.log("SUCCESS!", response.status, response.text);
         },
         (err) => {
-          console.log("FAILED...", err);
+          // console.log("FAILED...", err);
         }
       );
   }
@@ -150,10 +150,10 @@ export const paymentProcessing = (flightInfo, userInfo, insurance) => {
     .then((response) => {
       if (response.data.paymentUrl) {
         const paymentURL = response.data.paymentUrl;
-        console.log("Payment URL: ", paymentURL);
+        // console.log("Payment URL: ", paymentURL);
         window.location.replace(paymentURL);
       } else {
-        console.log("Payment Processing Failed: ", response.data);
+        // console.log("Payment Processing Failed: ", response.data);
       }
     })
     .catch((error) => {

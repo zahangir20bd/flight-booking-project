@@ -6,13 +6,13 @@ import DashboardNav from "../DashboardNav/DashboardNav";
 import { FaHome } from "react-icons/fa";
 
 const Sidebar = ({ isActive, setActive, isDarkMode }) => {
-  console.log(isDarkMode);
+  // console.log(isDarkMode);
   const navigate = useNavigate();
   // const [toggle, setToggle] = useState(false)
   const { user, logOut } = useAuth();
 
   const closeSidebar = (value) => {
-    console.log("closeSidebar called", value);
+    // console.log("closeSidebar called", value);
     setActive(value);
   };
 

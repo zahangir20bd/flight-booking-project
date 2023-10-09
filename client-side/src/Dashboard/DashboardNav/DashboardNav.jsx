@@ -20,7 +20,7 @@ const DashboardNav = ({closeSidebar}) => {
             });
     }, [axiosSecure]);
 
-    const currentUser = users.find(userData => userData?.email === user?.email);
+    const currentUser = users?.find(userData => userData?.email === user?.email);
 
     const userType = currentUser?.role;
 

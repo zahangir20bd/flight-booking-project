@@ -7,7 +7,7 @@ import Loader from "../Components/Loader/Loader";
 
 const DashboardLayout = () => {
   const { loading } = useAuth();
-  console.log(loading);
+  // console.log(loading);
   const [isActive, setActive] = useState("false");
   // const [isLoading, setLoading] = useState(false)
   // Sidebar Responsive Handler
@@ -18,7 +18,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (isDarkMode) {
-      console.log(isDarkMode);
+      // console.log(isDarkMode);
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");

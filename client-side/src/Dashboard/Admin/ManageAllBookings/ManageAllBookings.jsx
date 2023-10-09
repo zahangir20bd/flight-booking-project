@@ -88,7 +88,7 @@ const ManageAllBooking = () => {
     };
 
     fetch(
-      `http://localhost:5000/refund/approved/${flight?.flight?.departureDate}/${flight?.flight?.departureAirport}/${flight?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/refund/approved/${flight?.flight?.departureDate}/${flight?.flight?.departureAirport}/${flight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -104,7 +104,7 @@ const ManageAllBooking = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Success:", data.message);
+        // console.log("Success:", data.message);
         dispatch(setBookingsRefetch(new Date().toString()));
         successToast("Refund request accepted");
       })
@@ -119,7 +119,7 @@ const ManageAllBooking = () => {
     };
 
     fetch(
-      `http://localhost:5000/refund/denied/${date}/${airportCode}/${flightRef}`,
+      `https://server-side-tawny-sigma.vercel.app/refund/denied/${date}/${airportCode}/${flightRef}`,
       {
         method: "PATCH",
         headers: {
@@ -135,7 +135,7 @@ const ManageAllBooking = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Success:", data.message);
+        // console.log("Success:", data.message);
         dispatch(setBookingsRefetch(new Date().toString()));
         successToast("Refund request denied");
       })

@@ -11,7 +11,7 @@ const ServicesDetails = () => {
   const allServices = useSelector((state) => state.ourServices?.services);
   const service = allServices.find((service) => service._id === id);
   const services = allServices.filter((services) => services._id !== id);
-  console.log(service);
+  // console.log(service);
 
   return (
     <div className="">

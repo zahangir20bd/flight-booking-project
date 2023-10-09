@@ -33,7 +33,7 @@ const SpecialOffer = () => {
         setData(shuffledToCity.slice(0, 8));
       })
       .catch((error) => {
-        console.log("Special Discount Offer Can't Fetch", error);
+        // console.log("Special Discount Offer Can't Fetch", error);
       });
   }, [departureDate, destination]);
 

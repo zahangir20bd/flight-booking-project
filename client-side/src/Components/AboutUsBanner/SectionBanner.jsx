@@ -2,7 +2,7 @@ import Heading from "../Heading/Heading";
 import "./SectionBanner.css";
 
 const SectionBanner = ({ title, subtitle, bgImage }) => {
-  console.log(bgImage);
+  // console.log(bgImage);
   return (
     <div>
       <section

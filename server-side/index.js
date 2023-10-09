@@ -56,9 +56,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
     Math.cos(lat1Rad) *
-      Math.cos(lat2Rad) *
-      Math.sin(deltaLon / 2) *
-      Math.sin(deltaLon / 2);
+    Math.cos(lat2Rad) *
+    Math.sin(deltaLon / 2) *
+    Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c;
@@ -216,6 +216,7 @@ async function run() {
         const dynamicField = `${airportCode}`;
 
         airport[dynamicField][flightIndex].airportName = updateData.airportName;
+        airport[dynamicField][flightIndex].airlineLogo = updateData.airlineLogo;
         airport[dynamicField][flightIndex].airlineName = updateData.airlineName;
         airport[dynamicField][flightIndex].amountPerKm = updateData.amountPerKm;
         airport[dynamicField][flightIndex].taxesAndFees =
@@ -257,8 +258,6 @@ async function run() {
           },
           { $set: airport }
         );
-
-        console.log(airport);
 
         return res.status(200).json(airport);
       } catch (error) {
@@ -640,10 +639,10 @@ async function run() {
         total_amount: totalAmount,
         currency: "BDT",
         tran_id: transitionId,
-        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
-        fail_url: "http://localhost:5000/booking-failed",
-        cancel_url: "http://localhost:5000/booking-cancel",
-        ipn_url: "http://localhost:5000/ipn",
+        success_url: `https://server-side-tawny-sigma.vercel.app/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "https://server-side-tawny-sigma.vercel.app/booking-failed",
+        cancel_url: "https://server-side-tawny-sigma.vercel.app/booking-cancel",
+        ipn_url: "https://server-side-tawny-sigma.vercel.app/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -952,10 +951,10 @@ async function run() {
             $set: {
               [path + ".$.insurancePolicy.claimedStatus"]: newStatus,
               [path +
-              `.$.insurancePolicy.claimedInsurance.${premiumType}.claimedPrice`]:
+                `.$.insurancePolicy.claimedInsurance.${premiumType}.claimedPrice`]:
                 claimedAmount,
               [path +
-              `.$.insurancePolicy.claimedInsurance.${premiumType}.isClaimed`]:
+                `.$.insurancePolicy.claimedInsurance.${premiumType}.isClaimed`]:
                 isPremiumStatus,
             },
           };
@@ -1089,7 +1088,7 @@ async function run() {
             $set: {
               [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
               [`${date}.${airportCode}.$.user.seatNo`]: seatNo,
-              [`${date}.${airportCode}.$.flight.departureDate`]: flightDate,
+              // [`${date}.${airportCode}.$.flight.departureDate`]: flightDate,
             },
           };
 
@@ -1098,6 +1097,8 @@ async function run() {
             updateQuery,
             updateFields
           );
+
+          console.log("from result", result);
 
           if (result.modifiedCount === 1) {
             // Fetch the updated booking information after the update
@@ -1138,15 +1139,14 @@ async function run() {
     );
 
     // reschedule request manage (ADMIN)
-    app.patch(
-      "/rescheduleManage/:status/:date/:airportCode/:bookingReference",
+    app.patch("/rescheduleManage/:status/:date/:airportCode/:bookingReference",
       async (req, res) => {
         const { status, date, airportCode, bookingReference } = req.params;
         let rescheduleStatus = "denied";
         if (status === "approved") {
           rescheduleStatus = status;
         }
-
+        console.log(status, date, airportCode, bookingReference);
         try {
           // Construct the update query for user bookings collection
           const updateQuery = {
@@ -1165,7 +1165,8 @@ async function run() {
             updateQuery,
             updateFields
           );
-
+          console.log("from result", result);
+          
           if (result.modifiedCount === 1) {
             await residualCollection.updateOne(
               { "bookingInfo.bookingReference": bookingReference },

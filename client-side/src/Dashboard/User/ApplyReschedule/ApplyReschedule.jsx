@@ -80,7 +80,7 @@ const ApplyReschedule = () => {
       setFlightDate(newDate);
       // console.log("date", newDate);
       fetch(
-        `http://localhost:5000/rescheduleSeat/${myFlight?.flightId}/${myFlight?.totalSeat}/${newDate}`
+        `https://server-side-tawny-sigma.vercel.app/rescheduleSeat/${myFlight?.flightId}/${myFlight?.totalSeat}/${newDate}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -89,7 +89,7 @@ const ApplyReschedule = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setIsLoading(false);
         });
     } else {
@@ -106,7 +106,7 @@ const ApplyReschedule = () => {
       seatNo: newSeat,
     };
     fetch(
-      `http://localhost:5000/reschedule/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/reschedule/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -119,11 +119,11 @@ const ApplyReschedule = () => {
       .then((data) => {
         setIsModalOpen(false);
         dispatch(setRefetch(new Date().toString()));
-        console.log(data?.message);
+        // console.log(data?.message);
         toast.success("Successfully Sent Request");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

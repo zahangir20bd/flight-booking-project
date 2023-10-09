@@ -13,6 +13,7 @@ import { CiBadgeDollar } from "react-icons/ci";
 import { PiNoteLight } from "react-icons/pi";
 import axios from "axios";
 import { errorToast, successToast } from "../../../utils/toast";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 const FlightDetails = () => {
   const { airportCode, _id, id } = useParams();
@@ -28,10 +29,9 @@ const FlightDetails = () => {
     dispatch(setPath({ id, airportCode }));
   }, [id]);
 
-  console.log(filterFlight);
-
   const [updateData, setUpdateData] = useState({
     airportName: filterFlight[0]?.airportName,
+    airlineLogo: filterFlight[0]?.airlineLogo,
     airlineName: filterFlight[0]?.airlineName,
     amountPerKm: filterFlight[0]?.amountPerKm,
     taxesAndFees: filterFlight[0]?.taxesAndFees,
@@ -45,7 +45,7 @@ const FlightDetails = () => {
     cabin: filterFlight[0]?.flightInfo?.cabin,
     code: filterFlight[0]?.details?.code,
     time: filterFlight[0]?.details?.time,
-    latitude: filterFlight[0]?.details?.longitude,
+    latitude: filterFlight[0]?.details?.latitude,
     longitude: filterFlight[0]?.details?.longitude,
     dateAmountPerKm: filterFlight[0]?.dateChangeRules[0]?.amountPerKm,
     cancelAmountPerKm: filterFlight[0]?.cancellationRules[0]?.amountPerKm,
@@ -56,11 +56,12 @@ const FlightDetails = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/update/${airportCode}/${id}/${_id}`,
+        `https://server-side-tawny-sigma.vercel.app/update/${airportCode}/${id}/${_id}`,
         updateData
       );
 
       successToast("Flight Data Updated Success");
+      // window.location.href = "http://localhost:5173/dashboard/flightStatus";
     } catch (error) {
       errorToast("Flight Data Fail to Update");
       console.error("Error updating flight:", error);
@@ -73,6 +74,36 @@ const FlightDetails = () => {
       ...updateData,
       [name]: value,
     });
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // Send the image to ImgBB
+      const imgbbResponse = await fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const imgbbData = await imgbbResponse.json();
+
+      if (imgbbData && imgbbData.data) {
+        // Set the image link in your form data
+        setUpdateData((prevData) => ({
+          ...updateData,
+          airlineLogo: imgbbData.data.url,
+        }));
+      } else {
+        console.error("Error uploading image to ImgBB");
+      }
+    }
   };
 
   return (
@@ -98,8 +129,8 @@ const FlightDetails = () => {
               <div className="flex md:justify-start items-center space-x-3 text-[12px]">
                 <div>
                   <img
-                    className="h-16 w-15  rounded-full"
-                    src="https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/RJ.png"
+                    className="h-16 w-16 rounded-full"
+                    src={filterFlight[0]?.airlineLogo}
                     alt=""
                   />
                 </div>
@@ -163,7 +194,7 @@ const FlightDetails = () => {
                       </p>
 
                       <p className="text-xs mt-1">
-                        <span className="font-semibold">Oparated By</span>:{" "}
+                        <span className="font-semibold">Operated By</span>:{" "}
                         {filterFlight[0]?.flightInfo?.operatedBy}
                       </p>
 
@@ -173,12 +204,12 @@ const FlightDetails = () => {
                       </p>
 
                       <p className="text-xs mt-1">
-                        <span className="font-semibold">Depature City</span>:{" "}
+                        <span className="font-semibold">Departure City</span>:{" "}
                         {filterFlight[0]?.details?.city}
                       </p>
 
                       <p className="text-xs mt-1">
-                        <span className="font-semibold">Passanger Type</span>:{" "}
+                        <span className="font-semibold">Passenger Type</span>:{" "}
                         {filterFlight[0]?.passengerType}
                       </p>
                     </div>
@@ -240,7 +271,7 @@ const FlightDetails = () => {
                       </p>
 
                       <p className="text-xs mt-1">
-                        <span className="font-semibold">Dunration Cost km</span>
+                        <span className="font-semibold">Duration Cost km</span>
                         : {filterFlight[0]?.durationPerKm}
                       </p>
 
@@ -320,13 +351,27 @@ const FlightDetails = () => {
                       </div>
 
                       <div>
+                        <label className=" relative border-b-[1px] w-full border-black md:w-[195px] py-2 px-4 cursor-pointer flex items-center">
+                          <span className="absolute inset-0 z-10"></span>
+                          <MdOutlineCloudUpload className="mr-2" />
+                          Airline Image
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="absolute inset-0 z-20  w-full h-full opacity-0 cursor-pointer"
+                          />
+                        </label>
+                      </div>
+
+                      <div>
                         <input
                           className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="amountPerKm"
                           value={updateData.amountPerKm}
                           onChange={handleChange}
-                          placeholder="Amount Per Km Ex:(0.2)"
+                          placeholder="Amount Per Km Ex:(10)"
                           required
                         />
                       </div>
@@ -338,7 +383,7 @@ const FlightDetails = () => {
                           name="taxesAndFees"
                           value={updateData.taxesAndFees}
                           onChange={handleChange}
-                          placeholder="Taxes and Fees Ex:(200)"
+                          placeholder="Taxes and Fees Ex:(5%)"
                           required
                         />
                       </div>
@@ -524,7 +569,7 @@ const FlightDetails = () => {
                           name="dateAmountPerKm"
                           value={updateData.dateAmountPerKm}
                           onChange={handleChange}
-                          placeholder="Date Change Prise Ex(50)"
+                          placeholder="Date Change Prise Ex(2%)"
                           required
                         />
                       </div>
@@ -536,7 +581,7 @@ const FlightDetails = () => {
                           name="cancelAmountPerKm"
                           value={updateData.cancelAmountPerKm}
                           onChange={handleChange}
-                          placeholder="Cancellation Prise Ex(300)"
+                          placeholder="Cancellation Prise Ex(2%)"
                           required
                         />
                       </div>

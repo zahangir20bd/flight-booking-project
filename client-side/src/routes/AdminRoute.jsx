@@ -9,18 +9,18 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
-  const [isLoadingData, setIsLoadingData] = useState(true); // Add loading state
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   useEffect(() => {
     axiosSecure
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
-        setIsLoadingData(false); // Data has arrived, set loading to false
+        setIsLoadingData(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setIsLoadingData(false); // Handle error and set loading to false
+        setIsLoadingData(false);
       });
   }, [axiosSecure, user, isLoadingData]);
 
@@ -31,7 +31,6 @@ const AdminRoute = ({ children }) => {
   const isAdmin = currentUser?.role === "admin";
 
   if (loading || isLoadingData) {
-    // Display loading when loading or fetching data
     return <Loader />;
   }
   if (user && isAdmin) {

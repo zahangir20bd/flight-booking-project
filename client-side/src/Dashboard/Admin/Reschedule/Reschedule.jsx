@@ -32,12 +32,12 @@ const Reschedule = () => {
   const Denied = AllReschedule?.filter(
     (booking) => booking?.residualStatus === "denied"
   );
-  console.log(AllReschedule);
+  // console.log(AllReschedule);
 
   const myFlight = AllReschedule?.find(
     (flight) => flight?.bookingReference === flightRef
   );
-  console.log(myFlight);
+  // console.log(myFlight);
 
   const paidAmount = myFlight?.flight?.fareSummary?.total;
   const deductedAmount = Math.round(myFlight?.flight?.fareSummary?.total * 0.3);
@@ -49,7 +49,7 @@ const Reschedule = () => {
 
   const handleActionReschedule = (status) => {
     fetch(
-      `http://localhost:5000/rescheduleManage/${status}/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      `https://server-side-tawny-sigma.vercel.app/rescheduleManage/${status}/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -59,14 +59,14 @@ const Reschedule = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data?.message) {
           dispatch(setBookingsRefetch(new Date().toString()));
           toast.success(data?.message);
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -79,31 +79,28 @@ const Reschedule = () => {
         <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
           <div
             onClick={() => handleTabClick("allflight")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "allflight"
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${isActive === "allflight"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
-            }`}
+              }`}
           >
             All Flight
           </div>
           <div
             onClick={() => handleTabClick("confirm")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "confirm"
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${isActive === "confirm"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
-            }`}
+              }`}
           >
             Confirm Reschedule
           </div>
           <div
             onClick={() => handleTabClick("cancel")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel"
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${isActive === "cancel"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
-            }`}
+              }`}
           >
             Cancel Reschedule
           </div>
@@ -122,7 +119,7 @@ const Reschedule = () => {
       {isActive === "cancel" && (
         <TableReschedule
           AllReschedule={Denied}
-          // openModal={openModal}
+          openModal={openModal}
           setFlightRef={setFlightRef}
           status="cancel status"
         />
@@ -131,7 +128,7 @@ const Reschedule = () => {
       {isActive === "confirm" && (
         <TableReschedule
           AllReschedule={Confirmed}
-          // openModal={openModal}
+          openModal={openModal}
           setFlightRef={setFlightRef}
           status="confirm status"
         />
@@ -139,9 +136,8 @@ const Reschedule = () => {
 
       {isModalOpen && (
         <div
-          className={`fixed inset-0 flex items-center justify-center z-40 ${
-            isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-          } transition-opacity duration-300 `}
+          className={`fixed inset-0 flex items-center justify-center z-40 ${isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            } transition-opacity duration-300 `}
         >
           <div
             onClick={closeModal}
@@ -232,7 +228,7 @@ const Reschedule = () => {
                 </div>
               </div>
               {myFlight?.residualStatus === "denied" ||
-              myFlight?.residualStatus === "approved" ? (
+                myFlight?.residualStatus === "approved" ? (
                 <></>
               ) : (
                 <>

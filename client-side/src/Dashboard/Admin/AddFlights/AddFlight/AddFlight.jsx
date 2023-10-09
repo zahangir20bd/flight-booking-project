@@ -53,7 +53,7 @@ const AddFlight = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("http://localhost:5000/flights")
+    fetch("https://server-side-tawny-sigma.vercel.app/flights")
       .then((res) => res.json())
       .then((data) => dispatch(setAllFlights(data)));
   }, []);
@@ -209,7 +209,7 @@ const AddFlight = () => {
     const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
     fetch(
-      `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
+      `https://server-side-tawny-sigma.vercel.app/add_flight/${selectAirportId}?${queryString}`,
       {
         method: "POST",
         headers: {

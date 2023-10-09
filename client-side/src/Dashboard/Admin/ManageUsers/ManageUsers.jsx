@@ -63,10 +63,10 @@ const ManageUsers = () => {
       role: event.target.role.value,
       status: event.target.status.value,
     };
-    console.log(usersData);
+    // console.log(usersData);
 
     if (selectedUserId) {
-      fetch(`http://localhost:5000/users/${selectedUserId}`, {
+      fetch(`https://server-side-tawny-sigma.vercel.app/users/${selectedUserId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const ManageUsers = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         })
         .finally(() => {
           setIsLoading(false);

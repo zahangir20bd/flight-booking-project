@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { RxCaretDown } from "react-icons/rx";
-import { BiMoon, BiScatterChart, BiSun } from "react-icons/bi";
+import { BiScatterChart, BiSun } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
@@ -10,8 +10,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
 import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
-import { PiPhone } from "react-icons/pi";
 import { BsMoonFill } from "react-icons/bs";
+import { GiCommercialAirplane } from "react-icons/gi";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -30,7 +30,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isDarkMode) {
-      console.log(isDarkMode);
+      // console.log(isDarkMode);
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
@@ -53,7 +53,7 @@ const Navbar = () => {
       });
   }, [axiosSecure]);
 
-  const currentUser = users.find((userData) => userData?.email === user?.email);
+  const currentUser = users?.find((userData) => userData?.email === user?.email);
 
   const isAdmin = currentUser?.role === "admin";
 
@@ -277,7 +277,7 @@ const Navbar = () => {
                     tabIndex={0}
                     className="m-1 flex items-center font-medium cursor-pointer"
                   >
-                    <PiPhone className="text-lg mr-1" /> About Airbliss
+                    <GiCommercialAirplane className="text-lg mr-1" /> About Airbliss
                     <RxCaretDown />
                   </label>
                   <ul
