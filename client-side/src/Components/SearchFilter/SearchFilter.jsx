@@ -23,7 +23,6 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useCountdownContext } from "../../providers/CountdownContext";
 import { setLoading } from "../../redux/features/globalSlice";
-import { errorToast } from "../../utils/toast";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const { setIsStart } = useCountdownContext();
